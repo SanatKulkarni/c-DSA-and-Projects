@@ -333,6 +333,17 @@ void manageShop() {
 }
 
 int main() {
+
+
+    cout << endl;
+    cout << endl;
+    cout << "█▀ █░█ █▀█ █▀█   █▀▄▀█ ▄▀█ █▄░█ ▄▀█ █▀▀ █▀▀" << std::endl;
+    cout << "▄█ █▀█ █▄█ █▀▀   █░▀░█ █▀█ █░▀█ █▀█ █▄█ ██▄" << std::endl;
+    cout << endl;
+    cout << endl;
+
+
+
     int choice;
 
     do {
