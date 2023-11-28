@@ -6,10 +6,9 @@
 using namespace std;
 using namespace cv;
 
-void markStudentAttendance(const string& name, const string& rollNumber);
-void markTeacherAttendance(const string& name, const string& regNumber, int shiftNumber);
-void viewStudentAttendance();
-void viewTeacherAttendance();
+void markAttendance(const string& name, const string& rollNumber, const string& logFileName);
+void markAttendance(const string& name, const string& regNumber, int shiftNumber, const string& logFileName);
+void viewAttendance(const string& logFileName);
 
 int main() {
     int choice;
@@ -32,7 +31,7 @@ int main() {
             getline(cin, name);
             cout << "Enter Roll Number: ";
             getline(cin, rollNumber);
-            markStudentAttendance(name, rollNumber);
+            markAttendance(name, rollNumber, "studentattendance_log.txt");
             break;
         }
         case 2: {
@@ -44,14 +43,14 @@ int main() {
             getline(cin, regNumber);
             cout << "Enter Shift Number: ";
             cin >> shiftNumber;
-            markTeacherAttendance(name, regNumber, shiftNumber);
+            markAttendance(name, regNumber, shiftNumber, "teacherattendance_log.txt");
             break;
         }
         case 3:
-            viewStudentAttendance();
+            viewAttendance("studentattendance_log.txt");
             break;
         case 4:
-            viewTeacherAttendance();
+            viewAttendance("teacherattendance_log.txt");
             break;
         case 5:
             cout << "Exiting program.\n";
@@ -64,7 +63,7 @@ int main() {
     return 0;
 }
 
-void markStudentAttendance(const string& name, const string& rollNumber) {
+void markAttendance(const string& name, const string& rollNumber, const string& logFileName) {
     VideoCapture cap(0);
 
     if (!cap.isOpened()) {
@@ -118,15 +117,15 @@ void markStudentAttendance(const string& name, const string& rollNumber) {
     tm currentDate;
     localtime_s(&currentDate, &now);
 
-    ofstream log("studentattendance_log.txt", ios::app);
+    ofstream log(logFileName, ios::app);
     log << currentDate.tm_mday << "-" << currentDate.tm_mon + 1 << "-"
         << currentDate.tm_year + 1900 << " " << name << " " << rollNumber << endl;
     log.close();
 
-    cout << "Student Attendance marked for today: " << name << " " << rollNumber << endl;
+    cout << "Attendance marked for today: " << name << " " << rollNumber << endl;
 }
 
-void markTeacherAttendance(const string& name, const string& regNumber, int shiftNumber) {
+void markAttendance(const string& name, const string& regNumber, int shiftNumber, const string& logFileName) {
     VideoCapture cap(0);
 
     if (!cap.isOpened()) {
@@ -180,41 +179,23 @@ void markTeacherAttendance(const string& name, const string& regNumber, int shif
     tm currentDate;
     localtime_s(&currentDate, &now);
 
-    ofstream log("teacherattendance_log.txt", ios::app);
+    ofstream log(logFileName, ios::app);
     log << currentDate.tm_mday << "-" << currentDate.tm_mon + 1 << "-"
         << currentDate.tm_year + 1900 << " " << name << " " << regNumber << " " << shiftNumber << endl;
     log.close();
 
-    cout << "Teacher Attendance marked for today: " << name << " " << regNumber << " " << shiftNumber << endl;
+    cout << "Attendance marked for today: " << name << " " << regNumber << " " << shiftNumber << endl;
 }
 
-void viewStudentAttendance() {
-    ifstream log("studentattendance_log.txt");
+void viewAttendance(const string& logFileName) {
+    ifstream log(logFileName);
 
     if (!log.is_open()) {
-        cerr << "Error opening student attendance log file." << endl;
+        cerr << "Error opening attendance log file." << endl;
         return;
     }
 
-    cout << "Student Attendance Log:\n";
-    string line;
-
-    while (getline(log, line)) {
-        cout << line << endl;
-    }
-
-    log.close();
-}
-
-void viewTeacherAttendance() {
-    ifstream log("teacherattendance_log.txt");
-
-    if (!log.is_open()) {
-        cerr << "Error opening teacher attendance log file." << endl;
-        return;
-    }
-
-    cout << "Teacher Attendance Log:\n";
+    cout << "Attendance Log:\n";
     string line;
 
     while (getline(log, line)) {
