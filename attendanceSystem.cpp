@@ -151,7 +151,7 @@ void AttendanceSystem::displayAttendance(const string& logFileName) const {
     string line;
 
     while (getline(log, line)) {
-        cout << line << endl;
+        cout << "\t" << line << endl;
     }
 
     log.close();
@@ -164,12 +164,14 @@ int main() {
 
     do {
         clearScreen();
-        cout << "1) Mark Student Attendance\n";
-        cout << "2) Mark Teacher Attendance\n";
-        cout << "3) View Student Attendance\n";
-        cout << "4) View Teacher Attendance\n";
-        cout << "5) Exit\n";
-        cout << "Enter your choice: ";
+        cout << endl;
+        cout << endl;
+        cout << "\t1) Mark Student Attendance\n";
+        cout << "\t2) Mark Teacher Attendance\n";
+        cout << "\t3) View Student Attendance\n";
+        cout << "\t4) View Teacher Attendance\n";
+        cout << "\t5) Exit\n";
+        cout << "\tEnter your choice: ";
         cin >> choice;
 
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -177,9 +179,10 @@ int main() {
         switch (choice) {
         case 1: {
             string name, rollNumber;
-            cout << "Enter Name: ";
+            cout << endl;
+            cout << "\tEnter Name: ";
             getline(cin, name);
-            cout << "Enter Roll Number: ";
+            cout << "\tEnter Roll Number: ";
             getline(cin, rollNumber);
             attendanceSystem.markStudentAttendance(name, rollNumber);
             break;
@@ -187,11 +190,13 @@ int main() {
         case 2: {
             string name, regNumber;
             int shiftNumber;
-            cout << "Enter Name: ";
+            cout << endl;
+            cout << "\tEnter Name: ";
             getline(cin, name);
-            cout << "Enter Registration Number: ";
+            cout << "\tEnter Registration Number: ";
             getline(cin, regNumber);
-            cout << "Enter Shift Number: ";
+            
+            cout << "\tEnter Shift Number: ";
             cin >> shiftNumber;
             attendanceSystem.markTeacherAttendance(name, regNumber, shiftNumber);
             break;
